@@ -196,8 +196,12 @@ APP.realStoriesSlider = () => {
                 checkSliderState(swiper)
             },
             resize(swiper) {
-                swiper.update()
-                checkSliderState(swiper)
+                const handleResize = APP.utils.debounce(() => {
+                    swiper.update()
+                    checkSliderState(swiper)
+                    
+                }, 100);
+                handleResize()
             }
         }
     })
