@@ -241,6 +241,7 @@ APP.gotQuestion = {
             pin: $element[0],
             start: () => `top+=${offset} top`,
             end: () => `bottom-=${endOffset}`,
+            markers: true
         })
     },
 
