@@ -348,10 +348,16 @@ APP.gotQuestion = {
 }
 
 APP.hiwSlider = () => {
-    let hiwSlider = new Swiper('.hiwSlider', {
+    if (window.hiwSwiperInstance) {
+        window.hiwSwiperInstance.destroy(true, true);
+    }
+    
+    window.hiwSwiperInstance = new Swiper('.hiwSlider', {
         slidesPerView: 'auto',
         slidesOffsetBefore: 16,
         slidesOffsetAfter: 16,
+        loop: true,
+        effect: "fade",
         pagination: {
             el: '.hiw-pagination',
             clickable: true,
@@ -359,8 +365,7 @@ APP.hiwSlider = () => {
                 return '<div class="' + className + '">' + (index + 1) + "</div>";
             },
         }
-
-    })
+    });
 }
 
 
