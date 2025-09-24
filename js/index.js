@@ -430,4 +430,5 @@ $document.ready(function () {
     }, 300);
     
     window.addEventListener('resize', handleResize);
+    ScrollTrigger.refresh();
 })
