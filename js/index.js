@@ -241,8 +241,8 @@ APP.gotQuestion = {
             pin: $element[0],
             start: () => `top+=${offset} top`,
             end: () => `bottom-=${endOffset}`,
-            markers: true
         })
+
     },
 
     changeImage: function () {
@@ -303,12 +303,16 @@ APP.gotQuestion = {
     },
     initDesktop: function () {
         this.headerHeight = $('header').innerHeight()
-        this.pinNavigation()
-        this.changeImage()
-        this.changeSlideHandler()
+        
+        // Виклик методів з затримкою для коректної ініціалізації
+        setTimeout(() => {
+            this.changeImage()
+            this.pinNavigation()
+            this.changeSlideHandler()
+            console.log('init:', )
+            console.log(':', )
+        }, 500)
     },
-
-
     mobileDropDown: function () {
         $('.got-question-text-content.mobile .title').click(function () {
             $(this).toggleClass('active')
@@ -332,6 +336,9 @@ APP.gotQuestion = {
             "(max-width: 767px)": function () {
                 // нічого не робимо — всі ScrollTrigger-и від попереднього режиму автоматично знищуються
             }
+        })
+        window.addEventListener('load', function() {
+            // ScrollTrigger.refresh();
         })
     }
 }
@@ -420,15 +427,12 @@ $document.ready(function () {
     APP.realStoriesSlider()
 
     APP.hiwSlider()
-    APP.gotQuestion.init()
-
     APP.texdPopup.init()
 
+    APP.gotQuestion.init();
 
     const handleResize = APP.utils.debounce(() => {
-        ScrollTrigger.refresh();
     }, 300);
     
     window.addEventListener('resize', handleResize);
-    ScrollTrigger.refresh();
 })
