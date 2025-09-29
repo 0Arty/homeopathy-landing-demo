@@ -163,8 +163,8 @@ APP.realStoriesSlider = () => {
     let realStoriesSlider = new Swiper('.real-stories-slider', {
         loop: true,
         autoplay: {
-            delay: 4000,
-            disableOnInteraction: false,
+            delay: 10000,
+            disableOnInteraction: true,
             pauseOnMouseEnter: true,
             waitForTransition: true,
         },
