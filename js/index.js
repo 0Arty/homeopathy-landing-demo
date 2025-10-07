@@ -115,47 +115,60 @@ APP.header = {
 }
 
 APP.services = {
-
     mobileDropdown: {
-
+        isResizing: false,
+        resizeTimer: null,
+        lastWidth: window.innerWidth,
+        
         changeVisibility: function () {
-            $('.services-block__text .ui-services-list').toggle($(window).width() > 767)
+            const currentWidth = window.innerWidth;
+            $('.services-block__text .ui-services-list').toggle(currentWidth > 767);
         },
+        
         createHandlers: function () {
             $('.services-block__text').each(function () {
-                const $this = $(this)
-                const $dropdown = $this.find('.ui-services-list')
-                const $btn = $this.find('.mobile-toggle-list')
-
-                let textState = $btn.find('.text').text()
-
-
+                const $this = $(this);
+                const $dropdown = $this.find('.ui-services-list');
+                const $btn = $this.find('.mobile-toggle-list');
+                let textState = $btn.find('.text').text();
+                
                 $btn.on('click', function () {
-                    $dropdown.slideToggle()
-                    $btn.toggleClass('open')
+                    $dropdown.slideToggle();
+                    $btn.toggleClass('open');
+                    
                     if ($btn.hasClass('open')) {
-                        $btn.find('.text').text('Hide')
+                        $btn.find('.text').text('Hide');
                     } else {
-                        $btn.find('.text').text(textState)
+                        $btn.find('.text').text(textState);
                     }
-
-                })
-            })
+                });
+            });
         },
+        
+        handleResize: function () {
+            const currentWidth = window.innerWidth;
+            
+            // Перевіряємо чи змінилась саме ширина (ігноруємо зміну висоти)
+            if (currentWidth !== this.lastWidth) {
+                this.lastWidth = currentWidth;
+                this.changeVisibility();
+            }
+        },
+        
         init: function () {
-            this.createHandlers()
-            this.changeVisibility()
-
-            const handleResize = APP.utils.debounce(() => {
-                this.changeVisibility()
-            }, 50);
-
-            window.addEventListener('resize', handleResize);
+            this.createHandlers();
+            this.changeVisibility();
+            
+            const debouncedResize = APP.utils.debounce(() => {
+                this.handleResize();
+            }, 150);
+            
+            window.addEventListener('resize', debouncedResize);
         }
-
     },
+    
     init: function () {
-        this.mobileDropdown.init()
+        this.mobileDropdown.init();
     }
 }
 
